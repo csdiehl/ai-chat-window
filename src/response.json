@@ -1,0 +1,27 @@
+{
+  "id": "60c5192f-cb20-4ac6-8519-4cb6d9c54b8a",
+  "turns": [
+    {
+      "id": "8edd83f9-c672-4587-a38f-a30fdfb7fbbf",
+      "timestamp": "2023-09-23T18:59:34.211194",
+      "role": "user",
+      "messages": [{ "kind": "text", "content": "hi how are you?" }],
+      "generationParams": null,
+      "state": "done"
+    },
+    {
+      "id": "22182935-6431-43ee-af11-ee01f66a1a91",
+      "timestamp": "2023-09-23T18:59:34.476579+00:00",
+      "role": "assistant",
+      "messages": [
+        {
+          "kind": "text",
+          "content": "Hello there! I'm an AI, so I don't have feelings, but I'm here and ready to assist you. \ud83e\udd8a What can I help you with today?"
+        }
+      ],
+      "generationParams": null,
+      "state": "done",
+      "inReplyToId": "8edd83f9-c672-4587-a38f-a30fdfb7fbbf"
+    }
+  ]
+}
