@@ -58,10 +58,8 @@ const ChatInput = ({ newMessage, setNewMessage, handleSubmit }: InputProps) => {
         type="text"
         placeholder="Ask me something about foxes..."
         value={newMessage}
-        onChange={(e: any) =>
-          debounce(() => setNewMessage(e.target.value), 300)
-        }
-        onKeyDown={(e: React.KeyboardEvent) => handleKeyPress(e)}
+        onChange={(e: any) => setNewMessage(e.target.value)}
+        onKeyDown={debounce((e: React.KeyboardEvent) => handleKeyPress(e), 200)}
       />
       <SendButton role="button" onClick={handleSubmit}>
         send
