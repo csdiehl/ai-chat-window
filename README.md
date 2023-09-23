@@ -1,10 +1,27 @@
-# Getting Started with Create React App
+## Fixie Chat Window Test Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This UI allows the user to chat with a test Fixie agent. Key features:
+
+- User can set their own name for the sidekick, which will dynamically populate the name in the agent's messages
+- User can send messages via the send button or hitting the enter key
+- User gets instant feedback while response is fetched
+- The window dynamically adapts to the viewport size
+
+## Architecture Choices
+
+I separated the application logic from the UI. The `ChatWindow` component contains the main app logic and passes props to child components. This enables better de-bugging and separation of concerns.
+
+For this project, everything is rendered on the client side. The Fixie agent is called via a function in `api.ts`. This allows for a fast and responsive experience, but has security concerns. In a production app, I would use a framework like `Next.js` running in a Node environment to make this fetch call in a server side component. This would protect the API key from being visible on the client.
+
+## Other Notes
+
+The Fixie API response doesn't seem to be valid JSON, so I couldn't stream it given the amount of time I have. However, I provided instant feedback to the user while the data are fetched. This gives the impression of a fast and responsive UI.
+
+## Tests
+
+A couple of very basic tests can be found in the `App.test.tsx` file.
 
 ## Available Scripts
-
-In the project directory, you can run:
 
 ### `yarn start`
 
@@ -28,19 +45,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).

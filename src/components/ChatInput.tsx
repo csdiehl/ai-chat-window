@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import { background, secondaryColor } from "../styles"
+import { debounce } from "../utils"
 
 const MessageInput = styled.div`
   display: flex;
@@ -57,7 +58,9 @@ const ChatInput = ({ newMessage, setNewMessage, handleSubmit }: InputProps) => {
         type="text"
         placeholder="Ask me something about foxes..."
         value={newMessage}
-        onChange={(e: any) => setNewMessage(e.target.value)}
+        onChange={(e: any) =>
+          debounce(() => setNewMessage(e.target.value), 300)
+        }
         onKeyDown={(e: React.KeyboardEvent) => handleKeyPress(e)}
       />
       <SendButton role="button" onClick={handleSubmit}>

@@ -17,3 +17,15 @@ export function getRelativeDate(date: Date): string {
     return `${diffInDays} ${diffInDays === 1 ? "day" : "days"} ago`
   }
 }
+
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+type F = (...p: any[]) => any
+
+export function debounce(fn: F, t: number): F {
+  let timer: number
+  return function (...args) {
+    clearTimeout(timer)
+    timer = window.setTimeout(() => fn(...args), t)
+    return timer
+  }
+}
