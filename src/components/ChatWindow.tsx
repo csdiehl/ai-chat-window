@@ -26,14 +26,16 @@ interface ChatProps {
 }
 
 function ChatWindow({ agentName }: ChatProps) {
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<Message[]>([]) // stack for messages
   const [newMessage, setNewMessage] = useState<string>("")
 
   const handleSubmit = () => {
+    // check if the input is not empty
     if (newMessage.trim() !== "") {
       const timestamp = new Date()
       const userMessage: Message = { text: newMessage, timestamp, isUser: true }
 
+      // immediately add a default loading message
       const loadingMessage: Message = {
         text: "I'm thinking...",
         timestamp: new Date(),
@@ -42,7 +44,7 @@ function ChatWindow({ agentName }: ChatProps) {
       setMessages([...messages, userMessage, loadingMessage])
       setNewMessage("")
 
-      // Simulate agent response after a delay (e.g., 2 seconds)
+      // Fetch the response from the Fixie sidekick
       getAgentResponse(userMessage.text).then((data) => {
         if (data) setMessages([...messages, userMessage, data])
       })

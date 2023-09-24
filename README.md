@@ -11,6 +11,8 @@ This UI allows the user to chat with a test Fixie agent. Key features:
 
 I separated the application logic from the UI. The `ChatWindow` component contains the main app logic and passes props to child components. This enables better de-bugging and separation of concerns.
 
+The data structure for chat messages is a stack, with the most recent messages added to the top. Each message has a timestamp, the identity of the sender, and the text.
+
 For this project, everything is rendered on the client side. The Fixie agent is called via a function in `api.ts`. This allows for a fast and responsive experience, but has security concerns. In a production app, I would use a framework like `Next.js` running in a Node environment to make this fetch call in a server side component. This would protect the API key from being visible on the client.
 
 ## Other Notes
