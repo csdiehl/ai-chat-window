@@ -17,6 +17,13 @@ For this project, everything is rendered on the client side. The Fixie agent is 
 
 The Fixie API response doesn't seem to be valid JSON, so I couldn't stream it given the amount of time I have. However, I provided instant feedback to the user while the data are fetched. This gives the impression of a fast and responsive UI.
 
+Accessibility: fonts are specified in rem so they'll adapt to the user's preferred font size, and aria-roles are provided for form elements to be accessible to screen readers.
+
+A couple other enhancements I would add if I had more time:
+
+- debouncing the `onChange` handler so it isn't called on every keypress.
+- Checking continually for the update time, so it refreshes more often than on the last submitted message.
+
 ## Tests
 
 A couple of very basic tests can be found in the `App.test.tsx` file.

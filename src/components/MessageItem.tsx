@@ -38,8 +38,8 @@ const Avatar = styled.img`
 
 const MessageText = styled.p`
   margin: 0;
-  font-size: 0.875rem;
-  line-height: 1rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
   text-wrap: balance;
   color: rgba(255, 255, 255, 0.8);
 `
