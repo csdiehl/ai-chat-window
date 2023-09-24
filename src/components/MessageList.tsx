@@ -4,12 +4,14 @@ import { Message } from "./ChatWindow"
 import MessageItem from "./MessageItem"
 
 const Container = styled.div`
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   width: 100%;
   overflow-y: scroll;
-  height: 100%;
   padding-bottom: 56px;
+  grid-area: chat;
+  padding: 8px 16px;
 
   &::-webkit-scrollbar {
     display: none;

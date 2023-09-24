@@ -1,18 +1,28 @@
 import { useState } from "react"
 import ChatInput from "./ChatInput"
 import styled from "styled-components"
-import { primaryColor } from "../styles"
+import { primaryColor, background } from "../styles"
 import MessageList from "./MessageList"
 import { getAgentResponse } from "../api"
+import NameField from "./NameField"
 
 const ChatWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 56px 1fr 56px;
+  grid-template-columns: 100%;
   background-color: ${primaryColor};
-  height: calc(100% - 56px);
+  height: 100vh;
   box-sizing: border-box;
   position: relative;
-  padding: 16px;
+  grid-template-areas: "header" "chat" "input";
+`
+
+const TitleBlock = styled.div`
+  width: 100%;
+  background-color: ${background};
+  display: flex;
+  align-items: center;
+  grid-area: header;
 `
 
 export interface Message {
@@ -21,13 +31,10 @@ export interface Message {
   isUser: boolean
 }
 
-interface ChatProps {
-  agentName: string
-}
-
-function ChatWindow({ agentName }: ChatProps) {
+function ChatWindow() {
   const [messages, setMessages] = useState<Message[]>([]) // stack for messages
   const [newMessage, setNewMessage] = useState<string>("")
+  const [name, setName] = useState("My Awesome Sidekick")
 
   const handleSubmit = () => {
     // check if the input is not empty
@@ -53,7 +60,11 @@ function ChatWindow({ agentName }: ChatProps) {
 
   return (
     <ChatWrapper>
-      <MessageList messages={messages} agentName={agentName} />
+      <TitleBlock>
+        <NameField setName={setName} initialValue={name} />
+        <img alt="edit-icon" style={{ opacity: 0.8 }} src="./edit.svg"></img>
+      </TitleBlock>
+      <MessageList messages={messages} agentName={name} />
       <ChatInput
         newMessage={newMessage}
         setNewMessage={setNewMessage}

@@ -7,16 +7,11 @@ const MessageInput = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
   width: 100%;
   box-sizing: border-box;
-  transform: translate(-50%);
   padding: 16px;
   background-color: ${background};
-  height: 56px;
+  grid-area: input;
 `
 
 const InputField = styled.input`
