@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useRef } from "react"
 import styled from "styled-components"
 import { Message } from "./ChatWindow"
 import MessageItem from "./MessageItem"
@@ -24,6 +24,11 @@ interface MessageListProps {
 }
 
 const MessageList = ({ messages, agentName }: MessageListProps) => {
+  const endRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    endRef.current && endRef.current.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
   return (
     <Container>
       {messages.map((message, index) => (
@@ -33,6 +38,7 @@ const MessageList = ({ messages, agentName }: MessageListProps) => {
           agentName={agentName}
         ></MessageItem>
       ))}
+      <div ref={endRef}></div>
     </Container>
   )
 }
