@@ -22,6 +22,7 @@ const TitleBlock = styled.div`
   background-color: ${background};
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   grid-area: header;
 `
 

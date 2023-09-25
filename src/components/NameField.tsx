@@ -9,10 +9,15 @@ const Input = styled.input`
   color: rgba(255, 255, 255, 0.8);
   margin: 4px 16px;
   background: none;
+  width: 50%;
   max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  @media (max-width: 425px) {
+    width: 70%;
+  }
 `
 
 interface EditableTextFieldProps {
@@ -29,15 +34,13 @@ const NameField: React.FC<EditableTextFieldProps> = ({
   }
 
   return (
-    <div>
-      <Input
-        placeholder={initialValue}
-        type="text"
-        id="name"
-        value={initialValue}
-        onChange={handleNameChange}
-      />
-    </div>
+    <Input
+      placeholder={initialValue}
+      type="text"
+      id="name"
+      value={initialValue}
+      onChange={handleNameChange}
+    />
   )
 }
 
