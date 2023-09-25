@@ -27,6 +27,7 @@ const TitleBlock = styled.div`
   background-color: ${background};
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   grid-area: header;
 `
 
@@ -40,9 +41,12 @@ function ChatWindow() {
   const [messages, setMessages] = useState<Message[]>([]) // stack for messages
   const [newMessage, setNewMessage] = useState<string>("")
   const [name, setName] = useState("My Awesome Sidekick")
-  const { current, fetchAI } = useAIStream()
-
-  console.log("response:", current)
+  const { current, fetchAI } = useAIStream({
+    onComplete(final: any) {
+      console.log("response", final)
+      return null
+    },
+  })
 
   const handleSubmit = () => {
     // check if the input is not empty
