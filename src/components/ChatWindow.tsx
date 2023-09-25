@@ -3,8 +3,11 @@ import ChatInput from "./ChatInput"
 import styled from "styled-components"
 import { primaryColor, background } from "../styles"
 import MessageList from "./MessageList"
-import { getAgentResponse } from "../api"
 import NameField from "./NameField"
+import { useAIStream } from "ai-jsx/react"
+
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaXhpZS5haS9wcm9kIiwiYXVkIjoiaHR0cHM6Ly9maXhpZS5haSIsInN1YiI6IjM5In0.MeV6AF8FUBRxRtdvwU_ZJNkVmO9OXNrQH3SH0Zt0rA4"
 
 const ChatWrapper = styled.div`
   display: grid;
@@ -12,6 +15,7 @@ const ChatWrapper = styled.div`
   grid-template-columns: 100%;
   background-color: ${primaryColor};
   height: 100vh;
+  width: 100%;
   box-sizing: border-box;
   position: relative;
   grid-template-areas: "header" "chat" "input";
@@ -19,6 +23,7 @@ const ChatWrapper = styled.div`
 
 const TitleBlock = styled.div`
   width: 100%;
+  max-width: 100%;
   background-color: ${background};
   display: flex;
   align-items: center;
@@ -35,6 +40,9 @@ function ChatWindow() {
   const [messages, setMessages] = useState<Message[]>([]) // stack for messages
   const [newMessage, setNewMessage] = useState<string>("")
   const [name, setName] = useState("My Awesome Sidekick")
+  const { current, fetchAI } = useAIStream()
+
+  console.log("response:", current)
 
   const handleSubmit = () => {
     // check if the input is not empty
@@ -52,8 +60,15 @@ function ChatWindow() {
       setNewMessage("")
 
       // Fetch the response from the Fixie sidekick
-      getAgentResponse(userMessage.text).then((data) => {
-        if (data) setMessages([...messages, userMessage, data])
+      fetchAI("https://api.fixie.ai/api/v1/agents/justin/fixie/conversations", {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: newMessage,
+        }),
       })
     }
   }
@@ -62,7 +77,7 @@ function ChatWindow() {
     <ChatWrapper>
       <TitleBlock>
         <NameField setName={setName} initialValue={name} />
-        <img alt="edit-icon" style={{ opacity: 0.8 }} src="./edit.svg"></img>
+        <img src="./edit.svg"></img>
       </TitleBlock>
       <MessageList messages={messages} agentName={name} />
       <ChatInput

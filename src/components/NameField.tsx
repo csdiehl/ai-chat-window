@@ -9,7 +9,7 @@ const Input = styled.input`
   color: rgba(255, 255, 255, 0.8);
   margin: 4px 16px;
   background: none;
-  max-width: 100%;
+  width: 70%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
