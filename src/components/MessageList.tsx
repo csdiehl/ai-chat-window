@@ -21,14 +21,19 @@ const Container = styled.div`
 interface MessageListProps {
   messages: Message[]
   agentName: string
+  streamedMessage: string
 }
 
-const MessageList = ({ messages, agentName }: MessageListProps) => {
+const MessageList = ({
+  messages,
+  agentName,
+  streamedMessage,
+}: MessageListProps) => {
   const endRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     endRef.current && endRef.current.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  }, [messages, streamedMessage])
   return (
     <Container>
       {messages.map((message, index) => (
@@ -38,6 +43,16 @@ const MessageList = ({ messages, agentName }: MessageListProps) => {
           agentName={agentName}
         ></MessageItem>
       ))}
+      {streamedMessage !== "" && (
+        <MessageItem
+          agentName={agentName}
+          message={{
+            isUser: false,
+            text: streamedMessage + " |",
+            timestamp: new Date(),
+          }}
+        ></MessageItem>
+      )}
       <div ref={endRef}></div>
     </Container>
   )

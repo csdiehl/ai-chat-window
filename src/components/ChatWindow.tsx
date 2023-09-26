@@ -1,10 +1,10 @@
-import { useState } from "react"
-import ChatInput from "./ChatInput"
+import { useFixie } from "fixie/web"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { primaryColor, background } from "../styles"
+import { background, primaryColor } from "../styles"
+import ChatInput from "./ChatInput"
 import MessageList from "./MessageList"
 import NameField from "./NameField"
-import { useAIStream } from "ai-jsx/react"
 
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJmaXhpZS5haS9wcm9kIiwiYXVkIjoiaHR0cHM6Ly9maXhpZS5haSIsInN1YiI6IjM5In0.MeV6AF8FUBRxRtdvwU_ZJNkVmO9OXNrQH3SH0Zt0rA4"
@@ -41,12 +41,22 @@ function ChatWindow() {
   const [messages, setMessages] = useState<Message[]>([]) // stack for messages
   const [newMessage, setNewMessage] = useState<string>("")
   const [name, setName] = useState("My Awesome Sidekick")
-  const { current, fetchAI } = useAIStream({
-    onComplete(final: any) {
-      console.log("response", final)
-      return null
-    },
+  const { turns, modelResponseInProgress, sendMessage } = useFixie({
+    agentId: "justin/fixie",
+    fixieAPIKey: token,
   })
+
+  const latest =
+    turns &&
+    turns.length > 0 &&
+    turns
+      .at(-1)
+      .messages.filter((d) => d.kind === "text")
+      .at(-1)?.content
+
+  useEffect(() => {
+    console.log(latest)
+  }, [latest])
 
   const handleSubmit = () => {
     // check if the input is not empty
@@ -63,17 +73,9 @@ function ChatWindow() {
       setMessages([...messages, userMessage, loadingMessage])
       setNewMessage("")
 
+      console.log(userMessage.text)
       // Fetch the response from the Fixie sidekick
-      fetchAI("https://api.fixie.ai/api/v1/agents/justin/fixie/conversations", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: newMessage,
-        }),
-      })
+      sendMessage(userMessage.text)
     }
   }
 
@@ -81,9 +83,13 @@ function ChatWindow() {
     <ChatWrapper>
       <TitleBlock>
         <NameField setName={setName} initialValue={name} />
-        <img src="./edit.svg"></img>
+        <img alt="edit" src="./edit.svg"></img>
       </TitleBlock>
-      <MessageList messages={messages} agentName={name} />
+      <MessageList
+        streamedMessage={latest ?? ""}
+        messages={messages}
+        agentName={name}
+      />
       <ChatInput
         newMessage={newMessage}
         setNewMessage={setNewMessage}
